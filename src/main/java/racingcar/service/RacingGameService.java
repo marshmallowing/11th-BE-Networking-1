@@ -1,13 +1,14 @@
 package racingcar.service;
 
-import camp.nextstep.edu.missionutils.Console;
 import racingcar.domain.Car;
 import racingcar.domain.RacingGame;
 
 import java.util.List;
 
-import static racingcar.util.Validator.validateCarNames;
-import static racingcar.util.Validator.validateRounds;
+import static racingcar.view.InputView.enterCar;
+import static racingcar.view.InputView.enterRounds;
+import static racingcar.view.OutputView.printRaceResults;
+import static racingcar.view.OutputView.printWinners;
 
 public class RacingGameService {
     private final CarService carService = new CarService();
@@ -19,22 +20,6 @@ public class RacingGameService {
         return new RacingGame(cars, rounds);
     }
 
-    public List<Car> enterCar(){
-        System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
-        String input = Console.readLine().trim();
-        List<String> carNames = validateCarNames(input);
-
-        return carNames.stream()
-                .map(Car::new)
-                .toList();
-    }
-
-    public int enterRounds(){
-        System.out.println("시도할 회수는 몇회인가요?");
-        String roundInput = Console.readLine().trim();
-        return validateRounds(roundInput);
-    }
-
     public void playGame(RacingGame game){
         System.out.println("\n실행 결과");
 
@@ -43,15 +28,8 @@ public class RacingGameService {
                 carService.moveCar(car);
             }
             printRaceResults(game.getCars());
-            System.out.println();
         }
         overGame(game.getCars());
-    }
-
-    private void printRaceResults(List<Car> cars) {
-        for (Car car : cars) {
-            System.out.println(carService.getCarStatus(car));
-        }
     }
 
     public void overGame(List<Car> cars) {
@@ -67,6 +45,6 @@ public class RacingGameService {
                 .map(Car::getCarName)
                 .toList();
 
-        System.out.print("최종 우승자 : " + String.join(", ", winners));
+        printWinners(winners);
     }
 }

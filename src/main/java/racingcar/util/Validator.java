@@ -22,7 +22,6 @@ public class Validator {
             if (trimmedName.length() > 5) {
                 throw new IllegalArgumentException("자동차 이름은 5자 이하만 가능합니다");
             }
-
             validNames.add(trimmedName);
         }
         return validNames;

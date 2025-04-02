@@ -12,7 +12,7 @@ public class CarService {
         }
     }
 
-    public String getCarStatus(Car car) {
+    public static String getCarStatus(Car car) {
         return car.getCarName() + " : " + "-".repeat(car.getPosition());
     }
 }
